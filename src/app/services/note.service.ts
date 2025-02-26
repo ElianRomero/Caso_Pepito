@@ -7,37 +7,52 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class NoteService {
-  readonly API_URL ="https://ca4a90201c2862adfc02.free.beeceptor.com/api/notes/";
-  
-  notes: Note[];
-  
-  constructor(private http: HttpClient) {
-    this.notes = []
+  notes: Note[] = [];
+
+  constructor() {
+    this.loadNotes();
   }
- 
-  getNotes(){
-    return this.http.get<Note[]>(this.API_URL);
+
+  private loadNotes() {
+    const storedNotes = localStorage.getItem('notes');
+    this.notes = storedNotes ? JSON.parse(storedNotes) : [];
+  }
+
+  private saveNotes() {
+    localStorage.setItem('notes', JSON.stringify(this.notes));
+  }
+
+  getNotes() {
+    return this.notes;
   }
 
   createNote(note: Note) {
-   return this.http.post<Note>(this.API_URL, note);
+    this.notes.push(note);
+    this.saveNotes();
   }
 
   updateTitle(id: string, newTitle: string) {
-    const updatedNote = this.notes.find((note) => note.id === id);
-    if (!updatedNote) return;
-
-    updatedNote.tittle = newTitle;
+    const note = this.notes.find(n => n.id === id);
+    if (note) {
+      note.tittle = newTitle;
+      this.saveNotes();
+    }
   }
+
   updateMarked(id: string) {
-    const updatedNote = this.notes.find((note) => note.id === id);
-    if (!updatedNote) return;
-
-    updatedNote.marked = !updatedNote.marked;
+    const note = this.notes.find(n => n.id === id);
+    if (note) {
+      note.marked = !note.marked;
+      this.saveNotes();
+    }
   }
 
+  deleteNote(id: string) {
+    this.notes = this.notes.filter(n => n.id !== id);
+    this.saveNotes();
+  }
 
-  creteId = () => {
+  createId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2);
-  };
+  }
 }

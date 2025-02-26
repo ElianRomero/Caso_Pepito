@@ -13,38 +13,18 @@ import { NoteService } from '../../services/note.service';
 export class CreateNoteComponent {
   noteTitle: string = '';
 
-  constructor(public noteService: NoteService) { }
- 
-  handleSubmit = () => {
-    if (!this.noteTitle) return;
-   
+  constructor(public noteService: NoteService) {}
+
+  handleSubmit() {
+    if (!this.noteTitle.trim()) return;
+
     const newNote: Note = {
-      id: this.noteService.creteId(),
+      id: this.noteService.createId(),
       tittle: this.noteTitle,
       marked: false
-    }
-    this.createNote(newNote);
-  }
-  createNote(newNote: Note){
-    this.noteService.createNote(newNote).subscribe({
-      next:() =>{
-        this.getNotes();
-        this.noteTitle = "";
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    })
-  }
-  getNotes(){
-    this.noteService.getNotes().subscribe({
-      next: (data) => {
-       this.noteService.notes = data.reverse();
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    })
+    };
+
+    this.noteService.createNote(newNote);
+    this.noteTitle = "";
   }
 }
-

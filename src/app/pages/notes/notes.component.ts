@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { NoteCardComponent } from '../../components/note-card/note-card.component';
 import { CreateNoteComponent } from '../../components/create-note/create-note.component';
 import Note from '../../../models/Note';
+import { FormsModule } from '@angular/forms';
+import { CategoryManagerComponent } from '../../components/category-manager/category-manager.component';
 
 export @Component({
   selector: 'app-notes',
   standalone: true,
-  imports: [HeaderComponent, NoteCardComponent, CreateNoteComponent, CommonModule],
+  imports: [HeaderComponent, NoteCardComponent, CommonModule, FormsModule, CategoryManagerComponent, CreateNoteComponent],
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css'
 })
@@ -23,7 +25,14 @@ export @Component({
   ngOnInit(): void {
     this.loadNotes();
   }
+  selectedCategory: string = '';
 
+  filterNotes() {
+    return this.selectedCategory
+      ? this.noteService.getNotesByCategory(this.selectedCategory)
+      : this.noteService.getNotes();
+  }
+  
   loadNotes(): void {
     try {
       this.notes = this.noteService.getNotes();             

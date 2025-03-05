@@ -1,17 +1,26 @@
 <app-header></app-header>
+<!-- Formulario para Crear Categorías -->
+<h3>Crear Categoría</h3>
+<app-category-manager></app-category-manager>
 
-<section id="notes-page">
-    <h2>Notes</h2>
+<!-- Selector de Categorías -->
+<h3>Filtrar por Categoría</h3>
+<select [(ngModel)]="selectedCategory">
+    <option value="">Todas</option>
+    <option *ngFor="let category of noteService.getCategories()" [value]="category.id">
+        {{ category.name }}
+    </option>
+</select>
 
-    <h2 *ngIf="hasError">No se ha podido cargar las notas</h2>
-    <h2 *ngIf="isLoading && !hasError">Cargando...</h2>
+<!-- Sección de Notas -->
+<ul class="note-list">
+    <!-- Card para Crear una Nueva Nota dentro de la Categoría Seleccionada -->
+    <li>
+        <app-create-note [selectedCategory]="selectedCategory"></app-create-note>
+    </li>
 
-    <ul *ngIf="!hasError && !isLoading" class="note-list">
-        <li>
-            <app-create-note></app-create-note>
-        </li>
-        <li *ngFor="let note of noteService.notes; trackBy: trackById">
-            <app-note-card [note]="note"></app-note-card>
-        </li>
-    </ul>
-</section>
+    <!-- Lista de Notas Filtradas -->
+    <li *ngFor="let note of filterNotes(); trackBy: trackById">
+        <app-note-card [note]="note"></app-note-card>
+    </li>
+</ul>

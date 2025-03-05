@@ -1,0 +1,15 @@
+<form class="category-form" (ngSubmit)="addCategory()">
+    <input type="text" 
+        class="category-name"
+        placeholder="Nueva Categoría" 
+        [(ngModel)]="categoryName"
+        name="new-category"/>
+    <button class="create-btn">+</button>
+</form>
+
+<ul>
+    <li *ngFor="let category of noteService.getCategories()">
+        {{ category.name }} 
+        <button (click)="deleteCategory(category.id)">🗑</button>
+    </li>
+</ul>

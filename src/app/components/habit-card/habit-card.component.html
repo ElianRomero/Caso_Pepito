@@ -1,0 +1,13 @@
+<!-- habit-card.component.html -->
+<article class="habit-card">
+  <h4>{{ habit.name }}</h4>
+  <ul>
+    <li *ngFor="let task of habit.tasks">
+      <label>
+        <input type="checkbox" [checked]="task.completed" (change)="toggle(task.id)" />
+        {{ task.title }}
+      </label>
+    </li>
+  </ul>
+  <button (click)="delete()">Eliminar hábito</button>
+</article>

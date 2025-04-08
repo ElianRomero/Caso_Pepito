@@ -1,0 +1,11 @@
+<app-header></app-header>
+
+<h3>Crear Hábito</h3>
+<app-create-habit></app-create-habit>
+
+<h3>Lista de Hábitos</h3>
+<ul>
+  <li *ngFor="let habit of habits">
+    <app-habit-card [habit]="habit"></app-habit-card>
+  </li>
+</ul>

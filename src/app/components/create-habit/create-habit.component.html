@@ -1,0 +1,12 @@
+<!-- create-habit.component.html -->
+<form (ngSubmit)="createHabit()">
+  <input type="text" [(ngModel)]="title" name="habitTitle" placeholder="Nombre del hábito" required />
+
+  <div *ngFor="let task of tasks; let i = index">
+    <input type="text" [(ngModel)]="tasks[i]" [name]="'task' + i" placeholder="Tarea" required />
+    <button type="button" (click)="removeTask(i)">🗑</button>
+  </div>
+
+  <button type="button" (click)="addTask()">+ Añadir Tarea</button>
+  <button type="submit">Crear Hábito</button>
+</form>

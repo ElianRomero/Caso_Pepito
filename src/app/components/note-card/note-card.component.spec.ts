@@ -10,10 +10,19 @@ describe('NoteCardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [NoteCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NoteCardComponent);
     component = fixture.componentInstance;
+
+    // Le pasamos un mock básico para evitar undefined
+    component.note = {
+      id: "1",
+      tittle: "title",
+      marked: false,
+      category: "category"
+    };
+
     fixture.detectChanges();
   });
 

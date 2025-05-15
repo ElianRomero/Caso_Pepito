@@ -1,13 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { HabitService } from './habits.service';
 
-import { HabitsService } from './habits.service';
-
-describe('HabitsService', () => {
-  let service: HabitsService;
+describe('HabitService', () => {
+  let service: HabitService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(HabitsService);
+    TestBed.configureTestingModule({
+      providers: [
+        HabitService,
+        // Aquí van otros mocks si el servicio depende de algo
+      ]
+    });
+
+    service = TestBed.inject(HabitService);
   });
 
   it('should be created', () => {

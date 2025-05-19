@@ -4,7 +4,7 @@
 <app-category-manager></app-category-manager>
 
 <!-- Selector de Categorías -->
-<h3>Filtrar por Categoría</h3>
+<h3>Filtrar por Categorías</h3>
 <select [(ngModel)]="selectedCategory">
     <option value="">Todas</option>
     <option *ngFor="let category of noteService.getCategories()" [value]="category.id">
